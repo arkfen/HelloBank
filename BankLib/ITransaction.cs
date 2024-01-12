@@ -1,6 +1,6 @@
 ﻿namespace BankLib;
 
-public class Class1
+public interface ITransaction
 {
 
 }
