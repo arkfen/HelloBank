@@ -7,5 +7,4 @@ public interface IAccount
     Decimal Balance { get; }
     Decimal WithdrawLimit { get; }
     bool IsProcessing { get; }
-    void InitDeposit(Decimal amount);
 }
