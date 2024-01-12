@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace BankLib;
+﻿namespace BankLib;
 
 public interface IAccount
 {
