@@ -2,10 +2,10 @@
 
 public interface IAccount
 {
-    string Number { get; set; }
-    IClient Owner { get; set; }
-    Decimal Balance { get; set; }
-    Decimal WithdrawLimit { get; set; }
-    bool IsProcessing { get; set; }
+    string? Number { get; }
+    IClient? Owner { get; }
+    Decimal Balance { get; }
+    Decimal WithdrawLimit { get; }
+    bool IsProcessing { get; }
     void InitDeposit(Decimal amount);
 }
