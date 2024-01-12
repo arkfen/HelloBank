@@ -34,7 +34,8 @@ public class BankTest
         account = new InvestmentAccount(accNumber, person);
         bank.AddAccount(account);
         var accFound = bank.Accounts.First(x => x.Number == accNumber && x.Owner == person);
-        var result = accFound is null || accFound.WithdrawLimit != 500 ? false : true;
+        var result = accFound is null ||
+            accFound.WithdrawLimit != InvestmentAccount.WithdrawLimitIndAcc ? false : true;
         Assert.IsTrue(result, $"Expected for acc# '{accNumber}': true; Actual: {result}");
     }
 

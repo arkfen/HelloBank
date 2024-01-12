@@ -8,6 +8,8 @@ public class InvestmentAccount(string number, IClient owner) : Account
         Corporate
     }
 
+    public const decimal WithdrawLimitIndAcc = 500;
+
     public override string Number { get; } = number;
     public override IClient Owner { get; } = owner;
     AccType Type
@@ -21,7 +23,7 @@ public class InvestmentAccount(string number, IClient owner) : Account
             if (Owner.GetType() == typeof(IndividualClient))
             {
                 type = AccType.Individual;
-                WithdrawLimit = 500;
+                WithdrawLimit = WithdrawLimitIndAcc;
             }
             if (Owner.GetType() == typeof(CorporateClient))
             {
