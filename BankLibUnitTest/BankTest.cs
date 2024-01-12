@@ -4,8 +4,9 @@
 public class BankTest
 {
     [TestMethod]
-    public void TestMethod()
+    public void Test()
     {
+
     }
 
 }

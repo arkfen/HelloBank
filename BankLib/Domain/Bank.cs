@@ -13,9 +13,4 @@ public class Bank(string name) : IBank
     {
         throw new NotImplementedException();
     }
-
-    public void SetName(string name)
-    {
-        throw new NotImplementedException();
-    }
 }
