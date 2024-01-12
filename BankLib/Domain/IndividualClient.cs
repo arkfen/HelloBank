@@ -1,6 +1,6 @@
 ﻿namespace BankLib;
 
-public class IndividualClient(string firstName, string lastName, string address, string telephone) : IClient
+public struct IndividualClient(string firstName, string lastName, string address, string telephone) : IClient
 {
     public string Address { get; } = address;
     public string Telephone { get; } = telephone;
