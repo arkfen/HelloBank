@@ -17,6 +17,7 @@ public class TransactionTest
     static decimal transferAmount = 700;
     static decimal withdrawAmountLow = 300;
     static decimal withdrawAmountHigh = 1000;
+    static decimal withdrawAmountHuge = 1000000;
 
 
     public TransactionTest()
@@ -99,7 +100,11 @@ public class TransactionTest
     [TestMethod]
     public async Task TestWithdraw_Checking_Normal()
     {
-
+        var initialBalance = accountCh.Balance;
+        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountLow);
+        var newBalance = accountCh.Balance;
+        var result = newBalance == initialBalance - withdrawAmountLow;
+        Assert.IsTrue(result, $"Expected for amount'{depositAmount}': true; Actual: {result}");
     }
 
 
@@ -109,7 +114,11 @@ public class TransactionTest
     [TestMethod]
     public async Task TestWithdraw_Checking_Overdraft()
     {
-
+        var initialBalance = accountCh.Balance;
+        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountHuge);
+        var newBalance = accountCh.Balance;
+        var result = newBalance == initialBalance - withdrawAmountHuge;
+        Assert.IsFalse(result, $"Expected for amount'{depositAmount}': false; Actual: {result}");
     }
 
 
@@ -119,7 +128,11 @@ public class TransactionTest
     [TestMethod]
     public async Task TestWithdraw_IndInv_Normal()
     {
-
+        var initialBalance = accountInvInd.Balance;
+        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountLow);
+        var newBalance = accountInvInd.Balance;
+        var result = newBalance == initialBalance - withdrawAmountLow;
+        Assert.IsTrue(result, $"Expected for amount'{depositAmount}': true; Actual: {result}");
     }
 
 
@@ -129,7 +142,11 @@ public class TransactionTest
     [TestMethod]
     public async Task TestWithdraw_IndInv_OverLimit()
     {
-
+        var initialBalance = accountInvInd.Balance;
+        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountHigh);
+        var newBalance = accountInvInd.Balance;
+        var result = newBalance == initialBalance - withdrawAmountHigh;
+        Assert.IsFalse(result, $"Expected for amount'{depositAmount}': false; Actual: {result}");
     }
 
 

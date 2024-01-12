@@ -61,9 +61,9 @@ public class BankTest
     {
         string accNumber = "0007755";
         account = new CheckingAccount(accNumber, person);
-        await bank.AddAccountAsync(account);
+        await bank.AddAccountAsync(account).ConfigureAwait(true);
         account = new CheckingAccount(accNumber, person);
-        await bank.AddAccountAsync(account);
+        await bank.AddAccountAsync(account).ConfigureAwait(true);
         var numeberOfAcc = bank.Accounts.Count(x => x.Number == accNumber && x.Owner == person);
         var result = numeberOfAcc > 0 ? false : true;
         Assert.IsFalse(result, $"Expected for acc# '{accNumber}': false; Actual: {result}");
