@@ -9,7 +9,7 @@ public class Bank(string name) : IBank
 
     public List<IAccount> Accounts { get; } = [];
 
-    public void AddAccount(IAccount account)
+    public async Task AddAccount(IAccount account)
     {
         throw new NotImplementedException();
     }
