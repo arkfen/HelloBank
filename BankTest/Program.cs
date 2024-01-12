@@ -1,2 +1,33 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using BankLib;
+
+// Bank init
+//
+
+
+
+
+
+
+// Adding test accounts
+//
+
+
+
+
+// Testing Deposit
+//
+
+
+
+
+// Testing Withdraw
+//
+
+
+
+
+// Testing Transfer
+//
+
+
+
