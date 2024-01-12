@@ -2,6 +2,6 @@
 
 public interface IClient
 {
-    string Address { get; set; }
-    string Telephone { get; set; }
+    string Address { get; }
+    string Telephone { get; }
 }
