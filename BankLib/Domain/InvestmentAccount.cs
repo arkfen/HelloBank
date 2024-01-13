@@ -1,8 +1,8 @@
 ﻿namespace BankLib;
 
-public class InvestmentAccount(string number, IClient owner) : Account
+public class InvestmentAccount : Account
 {
-    enum AccType
+    public enum OwenershipType
     {
         Individual,
         Corporate
@@ -10,29 +10,25 @@ public class InvestmentAccount(string number, IClient owner) : Account
 
     public const decimal WithdrawLimitIndAcc = 500;
 
-    public override string Number { get; } = number;
-    public override IClient Owner { get; } = owner;
-    AccType Type
+    public override string? Number { get; protected set; }
+    public override IClient? Owner { get; protected set; }
+    public OwenershipType Type { get; set; }
+
+    public InvestmentAccount(string number, IClient owner)
     {
-        get
+        Number = number;
+        Owner = owner;
+
+        if (owner.GetType() == typeof(IndividualClient))
         {
-            return type;
+            Type = OwenershipType.Individual;
+            WithdrawLimit = WithdrawLimitIndAcc;
         }
-        set
+        if (owner.GetType() == typeof(CorporateClient))
         {
-            if (Owner.GetType() == typeof(IndividualClient))
-            {
-                type = AccType.Individual;
-                WithdrawLimit = WithdrawLimitIndAcc;
-            }
-            if (Owner.GetType() == typeof(CorporateClient))
-            {
-                type = AccType.Corporate;
-            }
+            Type = OwenershipType.Corporate;
         }
     }
-    private AccType type;
-
 
 
 }
