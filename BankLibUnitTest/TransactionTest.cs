@@ -22,21 +22,17 @@ public class TransactionTest
 
     public TransactionTest()
     {
-        _ = Init();
         bank.Name = "Simplle Bank";
+        bank.AddAccountAsync(accountCh).ConfigureAwait(false);
+        bank.AddAccountAsync(accountInvInd).ConfigureAwait(false);
+        bank.AddAccountAsync(accountInvCorp).ConfigureAwait(false);
+        Transaction.DepositAsync(accountCh.Number!, 10000).ConfigureAwait(false);
+        Transaction.DepositAsync(accountInvInd.Number!, 10000).ConfigureAwait(false);
+        Transaction.DepositAsync(accountInvCorp.Number!, 10000).ConfigureAwait(false);
+
     }
 
-    async Task Init()
-    {
-        await bank.AddAccountAsync(accountCh).ConfigureAwait(true);
-        await bank.AddAccountAsync(accountInvInd).ConfigureAwait(true);
-        await bank.AddAccountAsync(accountInvCorp).ConfigureAwait(true);
-        await Transaction.DepositAsync(accountCh.Number!, 10000).ConfigureAwait(true);
-        await Transaction.DepositAsync(accountInvInd.Number!, 10000).ConfigureAwait(true);
-        await Transaction.DepositAsync(accountInvCorp.Number!, 10000).ConfigureAwait(true);
-    }
-
-    /// <summary>
+    /// <summary>ß
     /// Testing depositing to Checking Account
     /// </summary>    
     [TestMethod]
@@ -130,7 +126,7 @@ public class TransactionTest
     public async Task TestWithdraw_IndInv_Normal()
     {
         var initialBalance = accountInvInd.Balance;
-        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountLow);
+        await Transaction.WithdawAsync(accountInvInd.Number!, withdrawAmountLow);
         var newBalance = accountInvInd.Balance;
         var result = newBalance == initialBalance - withdrawAmountLow;
         Assert.IsTrue(result, $"Expected for amount'{depositAmount}': true; Actual: {result}");
@@ -144,7 +140,7 @@ public class TransactionTest
     public async Task TestWithdraw_IndInv_OverLimit()
     {
         var initialBalance = accountInvInd.Balance;
-        await Transaction.WithdawAsync(accountCh.Number!, withdrawAmountHigh);
+        await Transaction.WithdawAsync(accountInvInd.Number!, withdrawAmountHigh);
         var newBalance = accountInvInd.Balance;
         var result = newBalance == initialBalance - withdrawAmountHigh;
         Assert.IsFalse(result, $"Expected for amount'{depositAmount}': false; Actual: {result}");

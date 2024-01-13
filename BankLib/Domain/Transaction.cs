@@ -86,7 +86,32 @@ public class Transaction : ITransaction
     /// <param name="amount">Amount to withdraw</param>
     public static async Task WithdawAsync(string accountNumber, decimal amount)
     {
-        throw new NotImplementedException();
+        IAccount? acc = null;
+        bool accProccessingStarted = false;
+        try
+        {
+            acc = await GetAccountByNumberAsync(accountNumber).ConfigureAwait(true);
+            if (acc is null) throw new ApplicationException("Account not found.");
+            acc.IsProcessing = true;
+            accProccessingStarted = true;
+
+            if (acc.WithdrawLimit != 0 && acc.WithdrawLimit < amount)
+                throw new ArgumentException($"Please withdraw less than {acc.WithdrawLimit}");
+
+            if (amount > acc.Balance) throw new ArgumentException("Not enough funds, sorry");
+            acc.Balance -= amount;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            if (acc is not null && accProccessingStarted)
+            {
+                acc.IsProcessing = false;
+            }
+        }
     }
 
 
