@@ -1,4 +1,7 @@
-﻿namespace BankLib;
+﻿using System.Security.Cryptography;
+
+namespace BankLib;
+
 
 public class Transaction : ITransaction
 {
@@ -9,7 +12,27 @@ public class Transaction : ITransaction
     /// <param name="amount">Amount to deposit</param>
     public static async Task DepositAsync(string accountNumber, decimal amount)
     {
-
+        IAccount? acc = null;
+        bool accProccessingStarted = false;
+        try
+        {
+            acc = await GetAccountByNumberAsync(accountNumber).ConfigureAwait(true);
+            if (acc is null) throw new ApplicationException("Account not found.");
+            acc.IsProcessing = true;
+            accProccessingStarted = true;
+            acc.Balance += amount;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            if (acc is not null && accProccessingStarted)
+            {
+                acc.IsProcessing = false;
+            }
+        }
     }
 
     /// <summary>
@@ -31,5 +54,14 @@ public class Transaction : ITransaction
     public static async Task WithdawAsync(string accountNumber, decimal amount)
     {
         throw new NotImplementedException();
+    }
+
+
+
+    private static async Task<IAccount?> GetAccountByNumberAsync(string number)
+    {
+        var acc = Bank.Instance.Accounts.FirstOrDefault(x => x.Number == number);
+        await Task.CompletedTask;
+        return acc;
     }
 }
