@@ -43,7 +43,40 @@ public class Transaction : ITransaction
     /// <param name="amount">Amount to transfer</param>
     public static async Task TransferAsync(string senderAccNum, string beneficiaryAccNum, decimal amount)
     {
-        throw new NotImplementedException();
+        IAccount? accSend = null;
+        IAccount? accBenif = null;
+        bool accSendProccessingStarted = false;
+        bool accBenifProccessingStarted = false;
+        try
+        {
+            accSend = await GetAccountByNumberAsync(senderAccNum).ConfigureAwait(true);
+            accBenif = await GetAccountByNumberAsync(beneficiaryAccNum).ConfigureAwait(true);
+            if (accSend is null) throw new ApplicationException("Sender account not found.");
+            if (accBenif is null) throw new ApplicationException("Beneficiary account not found.");
+            accSend.IsProcessing = true;
+            accSendProccessingStarted = true;
+            accBenif.IsProcessing = true;
+            accBenifProccessingStarted = true;
+
+            if (amount > accSend.Balance) throw new ArgumentException("Not enough funds, sorry");
+            accSend.Balance -= amount;
+            accBenif.Balance += amount;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        finally
+        {
+            if (accSend is not null && accSendProccessingStarted)
+            {
+                accSend.IsProcessing = false;
+            }
+            if (accBenif is not null && accBenifProccessingStarted)
+            {
+                accBenif.IsProcessing = false;
+            }
+        }
     }
 
     /// <summary>

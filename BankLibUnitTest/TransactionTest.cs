@@ -26,14 +26,14 @@ public class TransactionTest
         bank.Name = "Simplle Bank";
     }
 
-    static async Task Init()
+    async Task Init()
     {
-        await Transaction.DepositAsync(accountCh.Number!, 10000).ConfigureAwait(false); ;
-        await Transaction.DepositAsync(accountInvInd.Number!, 10000).ConfigureAwait(false); ;
-        await Transaction.DepositAsync(accountInvCorp.Number!, 10000).ConfigureAwait(false); ;
-        await bank.AddAccountAsync(accountCh).ConfigureAwait(false); ;
-        await bank.AddAccountAsync(accountInvInd).ConfigureAwait(false); ;
-        await bank.AddAccountAsync(accountInvCorp).ConfigureAwait(false); ;
+        await bank.AddAccountAsync(accountCh).ConfigureAwait(true);
+        await bank.AddAccountAsync(accountInvInd).ConfigureAwait(true);
+        await bank.AddAccountAsync(accountInvCorp).ConfigureAwait(true);
+        await Transaction.DepositAsync(accountCh.Number!, 10000).ConfigureAwait(true);
+        await Transaction.DepositAsync(accountInvInd.Number!, 10000).ConfigureAwait(true);
+        await Transaction.DepositAsync(accountInvCorp.Number!, 10000).ConfigureAwait(true);
     }
 
     /// <summary>
