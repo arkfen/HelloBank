@@ -9,7 +9,7 @@ public class Transaction : ITransaction
     /// <param name="amount">Amount to deposit</param>
     public static async Task DepositAsync(string accountNumber, decimal amount)
     {
-        throw new NotImplementedException();
+
     }
 
     /// <summary>

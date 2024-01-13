@@ -2,7 +2,7 @@
 
 public interface IBank
 {
-    string Name { get; }
+    string? Name { get; }
     List<IAccount> Accounts { get; }
     Task AddAccountAsync(IAccount account);
 }

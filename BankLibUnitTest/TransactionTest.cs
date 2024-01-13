@@ -6,7 +6,7 @@ namespace BankLibUnitTest;
 [TestClass]
 public class TransactionTest
 {
-    static Bank bank = new("Simplle Bank");
+    static Bank bank = Bank.Instance;
     static IClient person = new IndividualClient("Ark", "Fen", "Montreal", "5553322");
     static IClient company = new CorporateClient("MoneyMakers", "New York", "5554411");
     static IAccount accountCh = new CheckingAccount("0085511", person);
@@ -23,6 +23,7 @@ public class TransactionTest
     public TransactionTest()
     {
         _ = Init();
+        bank.Name = "Simplle Bank";
     }
 
     static async Task Init()

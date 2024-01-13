@@ -1,10 +1,21 @@
 ﻿namespace BankLib;
 
-public class Bank(string name) : IBank
+public sealed class Bank : IBank
 {
-    public string Name { get; } = name;
-
+    private static readonly Bank instance = new();
+    public string? Name { get; set; }
     public List<IAccount> Accounts { get; } = [];
+    public static Bank Instance { get => instance; }
+
+    static Bank()
+    {
+
+    }
+    private Bank()
+    {
+
+    }
+
 
     /// <summary>
     /// Adding new bank account to the Bank with unique account number

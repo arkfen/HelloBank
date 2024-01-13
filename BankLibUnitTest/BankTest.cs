@@ -5,10 +5,15 @@ namespace BankLibUnitTest;
 [TestClass]
 public class BankTest
 {
-    static Bank bank = new("Simplle Bank");
+    static Bank bank = Bank.Instance;
     static IClient person = new IndividualClient("Ark", "Fen", "Montreal", "5553322");
     static IClient company = new CorporateClient("MoneyMakers", "New York", "5554411");
     static IAccount? account;
+
+    public BankTest()
+    {
+        bank.Name = "Simplle Bank";
+    }
 
     /// <summary>
     /// Testinng adding Checking account
